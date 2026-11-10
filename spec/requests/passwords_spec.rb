@@ -43,7 +43,7 @@ RSpec.describe "Passwords", type: :request do
 
   it "updates the password" do
     expect {
-      put password_path(user.password_reset_token), params: { password: "new", password_confirmation: "new" }
+      put password_path(user.password_reset_token), params: { password: "new-password", password_confirmation: "new-password" }
     }.to change { user.reload.password_digest }
     expect(response).to redirect_to(new_session_path)
 
