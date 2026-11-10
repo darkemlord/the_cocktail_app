@@ -90,5 +90,74 @@ RSpec.describe "Cocktails", type: :request do
         expect(response.body).to include("Difficulty is not included in the list")
       end
     end
+
+    describe "GET /cocktails/:id/edit" do
+      it "renders the form for an own cocktail" do
+        get edit_cocktail_path(cocktail)
+        expect(response).to have_http_status(:success)
+      end
+
+      it "returns not found for another user's cocktail" do
+        get edit_cocktail_path(cocktails(:two))
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    describe "PATCH /cocktails/:id" do
+      it "updates an own cocktail" do
+        patch cocktail_path(cocktail), params: { cocktail: { name: "Boulevardier", difficulty: "hard" } }
+
+        expect(cocktail.reload.name).to eq("Boulevardier")
+        expect(cocktail).to be_hard
+        expect(response).to redirect_to(cocktail_path(cocktail))
+      end
+
+      it "re-renders the form with errors when invalid" do
+        patch cocktail_path(cocktail), params: { cocktail: { name: "" } }
+
+        expect(cocktail.reload.name).to eq("Negroni")
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "does not update another user's cocktail" do
+        other = cocktails(:two)
+
+        patch cocktail_path(other), params: { cocktail: { name: "Hacked" } }
+
+        expect(response).to have_http_status(:not_found)
+        expect(other.reload.name).to eq("Margarita")
+      end
+    end
+
+    describe "DELETE /cocktails/:id" do
+      it "deletes an own cocktail" do
+        expect {
+          delete cocktail_path(cocktail)
+        }.to change(Cocktail, :count).by(-1)
+
+        expect(response).to redirect_to(cocktails_path)
+        expect(response).to have_http_status(:see_other)
+      end
+
+      it "does not delete another user's cocktail" do
+        expect {
+          delete cocktail_path(cocktails(:two))
+        }.not_to change(Cocktail, :count)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    describe "edit link on the show page" do
+      it "is shown to the owner" do
+        get cocktail_path(cocktail)
+        expect(response.body).to include(edit_cocktail_path(cocktail))
+      end
+
+      it "is hidden from other users" do
+        get cocktail_path(cocktails(:two))
+        expect(response.body).not_to include(edit_cocktail_path(cocktails(:two)))
+      end
+    end
   end
 end

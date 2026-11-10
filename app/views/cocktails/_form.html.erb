@@ -1,0 +1,33 @@
+<%= form_with model: cocktail do |form| %>
+  <% if cocktail.errors.any? %>
+    <div style="color:red">
+      <ul>
+        <% cocktail.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :difficulty %><br>
+    <%= form.select :difficulty, Cocktail.difficulties.keys.map { |d| [ d.humanize, d ] } %>
+  </div>
+
+  <div>
+    <%= form.label :ingredients %><br>
+    <%= form.text_area :ingredients, rows: 5, placeholder: "One ingredient per line" %>
+  </div>
+
+  <div>
+    <%= form.label :instructions %><br>
+    <%= form.text_area :instructions, rows: 5 %>
+  </div>
+
+  <%= form.submit %>
+<% end %>

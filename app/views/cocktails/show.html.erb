@@ -11,4 +11,8 @@
 <h2>Instructions</h2>
 <%= simple_format @cocktail.instructions %>
 
+<% if @cocktail.user == Current.user %>
+  <%= link_to "Edit", edit_cocktail_path(@cocktail) %>
+  <%= button_to "Delete", @cocktail, method: :delete, data: { turbo_confirm: "Delete #{@cocktail.name}?" } %>
+<% end %>
 <%= link_to "Back to cocktails", cocktails_path %>
