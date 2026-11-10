@@ -1,16 +1,55 @@
-<h1><%= @cocktail.name %></h1>
+<%= render "shared/glass_sprite" %>
 
-<p>Difficulty: <%= @cocktail.difficulty %></p>
-<p>By <%= @cocktail.user.email_address %></p>
+<main class="main" id="main">
+  <div class="container">
+    <%= link_to cocktails_path, class: "link-back" do %>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to cocktails
+    <% end %>
 
-<h2>Ingredients</h2>
-<%= simple_format @cocktail.ingredients %>
+    <article class="recipe" style="margin-top: 16px">
+      <header class="card recipe__hero">
+        <%= render "art", cocktail: @cocktail, css_class: "recipe__art" %>
+        <div class="recipe__heading">
+          <p class="kicker kicker--ink" lang="ja" aria-hidden="true">レシピ・カード</p>
+          <h1 class="recipe__title"><%= @cocktail.name %></h1>
+          <div class="recipe__meta">
+            <span class="badge badge--<%= @cocktail.difficulty %>"><%= @cocktail.difficulty %></span>
+            <span>by <%= @cocktail.user.email_address %></span>
+          </div>
 
-<h2>Instructions</h2>
-<%= simple_format @cocktail.instructions %>
+          <% if @cocktail.user == Current.user %>
+            <div class="recipe__actions">
+              <%= link_to edit_cocktail_path(@cocktail), class: "btn btn--secondary" do %>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/><path d="M13.5 6.5l4 4" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>
+                Edit
+              <% end %>
+              <%= button_to @cocktail, method: :delete, class: "btn btn--danger", form: { data: { turbo_confirm: "Delete #{@cocktail.name}?" } } do %>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Delete
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </header>
 
-<% if @cocktail.user == Current.user %>
-  <%= link_to "Edit", edit_cocktail_path(@cocktail) %>
-  <%= button_to "Delete", @cocktail, method: :delete, data: { turbo_confirm: "Delete #{@cocktail.name}?" } %>
-<% end %>
-<%= link_to "Back to cocktails", cocktails_path %>
+      <div class="recipe__body">
+        <section class="card" aria-labelledby="ingredients-title">
+          <h2 class="section-title" id="ingredients-title">Ingredients</h2>
+          <ul class="ingredient-list">
+            <% ingredient_lines(@cocktail).each do |line| %>
+              <li><%= line %></li>
+            <% end %>
+          </ul>
+        </section>
+
+        <section class="card" aria-labelledby="instructions-title">
+          <h2 class="section-title" id="instructions-title">Instructions</h2>
+          <div class="prose">
+            <%= simple_format @cocktail.instructions %>
+          </div>
+        </section>
+      </div>
+    </article>
+  </div>
+</main>

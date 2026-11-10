@@ -1,0 +1,6 @@
+<% tone = cocktail_tone(cocktail) %>
+<div class="art art--photo tone-<%= tone[:n] %> <%= css_class %>" aria-hidden="true">
+  <%= image_tag "tones/tone-#{tone[:n]}.webp", class: "art__img", alt: "" %>
+  <span class="art__tag" lang="ja"><%= tone[:tag] %></span>
+  <svg class="art__glass" viewBox="0 0 64 64"><use href="#glass-<%= tone[:glass] %>"/></svg>
+</div>

@@ -1,5 +1,12 @@
-<h1>Edit cocktail</h1>
+<main class="main" id="main">
+  <div class="container container--narrow">
+    <div class="page-head">
+      <div>
+        <p class="kicker" lang="ja" aria-hidden="true">リミックス</p>
+        <h1 class="page-title">Edit cocktail</h1>
+      </div>
+    </div>
 
-<%= render "form", cocktail: @cocktail %>
-
-<%= link_to "Back to cocktail", @cocktail %>
+    <%= render "form", cocktail: @cocktail, back_path: cocktail_path(@cocktail), back_label: "Back to cocktail" %>
+  </div>
+</main>

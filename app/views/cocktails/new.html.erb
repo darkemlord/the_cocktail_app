@@ -1,5 +1,12 @@
-<h1>New cocktail</h1>
+<main class="main" id="main">
+  <div class="container container--narrow">
+    <div class="page-head">
+      <div>
+        <p class="kicker" lang="ja" aria-hidden="true">ニュー・レシピ</p>
+        <h1 class="page-title">New cocktail</h1>
+      </div>
+    </div>
 
-<%= render "form", cocktail: @cocktail %>
-
-<%= link_to "Back to cocktails", cocktails_path %>
+    <%= render "form", cocktail: @cocktail, back_path: cocktails_path, back_label: "Back to cocktails" %>
+  </div>
+</main>

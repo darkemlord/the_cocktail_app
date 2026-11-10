@@ -1,33 +1,33 @@
-<%= form_with model: cocktail do |form| %>
-  <% if cocktail.errors.any? %>
-    <div style="color:red">
-      <ul>
-        <% cocktail.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+<div class="card card--tape">
+  <%= render "shared/form_errors", record: cocktail %>
+
+  <%= form_with model: cocktail, class: "form" do |form| %>
+    <div class="form-field">
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :difficulty %>
+      <%= form.select :difficulty, Cocktail.difficulties.keys.map { |d| [ d.humanize, d ] } %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :ingredients %>
+      <%= form.text_area :ingredients, rows: 6, placeholder: "One ingredient per line" %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :instructions %>
+      <%= form.text_area :instructions, rows: 8, class: "textarea--lg" %>
+    </div>
+
+    <div class="form-actions">
+      <%= form.submit class: "btn btn--primary btn--lg" %>
+      <%= link_to back_path, class: "link-back" do %>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <%= back_label %>
+      <% end %>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :name %><br>
-    <%= form.text_field :name %>
-  </div>
-
-  <div>
-    <%= form.label :difficulty %><br>
-    <%= form.select :difficulty, Cocktail.difficulties.keys.map { |d| [ d.humanize, d ] } %>
-  </div>
-
-  <div>
-    <%= form.label :ingredients %><br>
-    <%= form.text_area :ingredients, rows: 5, placeholder: "One ingredient per line" %>
-  </div>
-
-  <div>
-    <%= form.label :instructions %><br>
-    <%= form.text_area :instructions, rows: 5 %>
-  </div>
-
-  <%= form.submit %>
-<% end %>
+</div>

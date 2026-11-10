@@ -1,16 +1,47 @@
-<h1>Cocktails</h1>
+<%= render "shared/glass_sprite" %>
 
-<%= link_to "New cocktail", new_cocktail_path %>
+<main class="main" id="main">
+  <div class="container">
+    <div class="page-head">
+      <div>
+        <p class="kicker" lang="ja" aria-hidden="true">カクテル・コレクション</p>
+        <h1 class="page-title">Cocktails</h1>
+      </div>
+      <%= link_to new_cocktail_path, class: "btn btn--primary btn--lg" do %>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+        New cocktail
+      <% end %>
+    </div>
 
-<% if @cocktails.any? %>
-  <ul>
-    <% @cocktails.each do |cocktail| %>
-      <li>
-        <%= link_to cocktail.name, cocktail %>
-        (<%= cocktail.difficulty %>) by <%= cocktail.user.email_address %>
-      </li>
+    <% if @cocktails.any? %>
+      <ul class="cocktail-grid" role="list">
+        <% @cocktails.each do |cocktail| %>
+          <li>
+            <article class="cocktail-card">
+              <%= render "art", cocktail: cocktail, css_class: "cocktail-card__art" %>
+              <div class="cocktail-card__body">
+                <h2 class="cocktail-card__title">
+                  <%= link_to cocktail.name, cocktail, class: "cocktail-card__link" %>
+                </h2>
+                <div class="cocktail-card__meta">
+                  <span class="badge badge--<%= cocktail.difficulty %>"><%= cocktail.difficulty %></span>
+                  <span class="cocktail-card__author">by <%= cocktail.user.email_address %></span>
+                </div>
+              </div>
+            </article>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <div class="empty-state">
+        <%= image_tag "extras/empty-state.webp", class: "empty-state__img", alt: "" %>
+        <h2 class="empty-state__title">No cocktails yet.</h2>
+        <p class="empty-state__text">The bar is open and the playlist is ready. Add the first recipe to get the party started.</p>
+        <%= link_to new_cocktail_path, class: "btn btn--primary btn--lg" do %>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+          New cocktail
+        <% end %>
+      </div>
     <% end %>
-  </ul>
-<% else %>
-  <p>No cocktails yet.</p>
-<% end %>
+  </div>
+</main>
