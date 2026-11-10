@@ -79,14 +79,14 @@ RSpec.describe "Cocktails", type: :request do
           post cocktails_path, params: { cocktail: { name: "" } }
         }.not_to change(Cocktail, :count)
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.body).to include("Name can&#39;t be blank")
       end
 
       it "re-renders the form when difficulty is unknown" do
         post cocktails_path, params: { cocktail: valid_params[:cocktail].merge(difficulty: "bogus") }
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.body).to include("Difficulty is not included in the list")
       end
     end
@@ -116,7 +116,7 @@ RSpec.describe "Cocktails", type: :request do
         patch cocktail_path(cocktail), params: { cocktail: { name: "" } }
 
         expect(cocktail.reload.name).to eq("Negroni")
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
 
       it "does not update another user's cocktail" do

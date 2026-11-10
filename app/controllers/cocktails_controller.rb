@@ -19,7 +19,7 @@ class CocktailsController < ApplicationController
     if @cocktail.save
       redirect_to @cocktail, notice: "Cocktail was successfully created."
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -30,7 +30,7 @@ class CocktailsController < ApplicationController
     if @cocktail.update(cocktail_params)
       redirect_to @cocktail, notice: "Cocktail was successfully updated."
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
