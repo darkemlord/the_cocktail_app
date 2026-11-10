@@ -1,2 +1,12 @@
-<h1>Cocktails#show</h1>
-<p>Find me in app/views/cocktails/show.html.erb</p>
+<h1><%= @cocktail.name %></h1>
+
+<p>Difficulty: <%= @cocktail.difficulty %></p>
+<p>By <%= @cocktail.user.email_address %></p>
+
+<h2>Ingredients</h2>
+<%= simple_format @cocktail.ingredients %>
+
+<h2>Instructions</h2>
+<%= simple_format @cocktail.instructions %>
+
+<%= link_to "Back to cocktails", cocktails_path %>

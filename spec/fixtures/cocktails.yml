@@ -2,14 +2,14 @@
 
 one:
   user: one
-  name: MyString
-  ingredients: MyText
-  instructions: MyText
-  difficulty: 1
+  name: Negroni
+  ingredients: Gin, Campari, vermouth rosso
+  instructions: Stir with ice and strain.
+  difficulty: easy
 
 two:
   user: two
-  name: MyString
-  ingredients: MyText
-  instructions: MyText
-  difficulty: 1
+  name: Margarita
+  ingredients: Tequila, triple sec, lime juice
+  instructions: Shake with ice and strain.
+  difficulty: medium
