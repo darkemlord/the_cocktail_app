@@ -1,3 +1,5 @@
+<%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
+
 <h1><%= @cocktail.name %></h1>
 
 <p>Difficulty: <%= @cocktail.difficulty %></p>

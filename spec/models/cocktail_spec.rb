@@ -15,4 +15,12 @@ RSpec.describe Cocktail, type: :model do
   it "defaults difficulty to easy" do
     expect(Cocktail.new).to be_easy
   end
+
+  it "is invalid with an unknown difficulty" do
+    cocktail = cocktails(:one)
+    cocktail.difficulty = "bogus"
+
+    expect(cocktail).not_to be_valid
+    expect(cocktail.errors).to include(:difficulty)
+  end
 end
