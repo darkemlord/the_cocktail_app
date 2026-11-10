@@ -1,0 +1,12 @@
+<aside class="dialogue host-<%= host %> <%= "dialogue--end" if placement == :end %>" aria-label="<%= details[:name] %>, <%= details[:role] %>">
+  <div class="portrait" data-expression="<%= expression %>">
+    <%= image_tag "hosts/#{host}/bg.webp", class: "portrait__bg", alt: "" %>
+    <%= image_tag "hosts/#{host}/#{expression}.png", class: "portrait__img", alt: "" %>
+  </div>
+  <div class="dialogue__box">
+    <p class="dialogue__name">
+      <%= details[:name] %><span class="dialogue__role"><%= details[:role] %></span><span class="dialogue__name-jp" lang="ja" aria-hidden="true"><%= details[:jp] %></span>
+    </p>
+    <p class="dialogue__text"><%= line %></p>
+  </div>
+</aside>

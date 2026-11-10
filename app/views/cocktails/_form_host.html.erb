@@ -1,0 +1,5 @@
+<% if cocktail.errors.any? %>
+  <%= host_dialogue :reina, :surprise, "Whoa, missing something? Even I need a recipe sometimes." %>
+<% else %>
+  <%= host_dialogue :reina, :fun, "Show me what you've got. And measure the gin this time." %>
+<% end %>

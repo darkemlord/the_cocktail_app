@@ -29,4 +29,6 @@
       <%= link_to "Already have an account? Sign in", new_session_path %>
     </div>
   </section>
+
+  <%= host_dialogue :mika, (@user.errors.any? ? :surprise : :smile), "A new face! Grab a drink, you're going to love it here." %>
 </main>

@@ -14,6 +14,12 @@
     </div>
 
     <% if @cocktails.any? %>
+      <%= host_dialogue :reina, :curious, "What are we mixing tonight?" %>
+    <% else %>
+      <%= host_dialogue :mika, :fun, "No cocktails yet? Let's fix that, I'm thirsty!" %>
+    <% end %>
+
+    <% if @cocktails.any? %>
       <ul class="cocktail-grid" role="list">
         <% @cocktails.each do |cocktail| %>
           <li>

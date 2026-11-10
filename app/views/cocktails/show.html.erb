@@ -51,5 +51,13 @@
         </section>
       </div>
     </article>
+
+    <% if notice.present? %>
+      <%= host_dialogue :mika, :smile, "Cheers! That one's going on the menu.", placement: :end %>
+    <% elsif @cocktail.hard? %>
+      <%= host_dialogue :reina, :fun, "Easy there! You're making a cocktail, not starting a hurricane.", placement: :end %>
+    <% else %>
+      <%= host_dialogue :nagisa, :neutral, "Some drinks are meant to be enjoyed slowly. Especially on nights like this.", placement: :end %>
+    <% end %>
   </div>
 </main>
