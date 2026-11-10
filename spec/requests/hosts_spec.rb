@@ -15,6 +15,24 @@ RSpec.describe "Hosts", type: :request do
     expect(host_on_page).to eq("mika")
   end
 
+  describe "hiding the hosts" do
+    it "shows them by default with a hide toggle" do
+      get new_session_path
+
+      expect(response.body).not_to include('class="app app--hosts-off"')
+      expect(response.body).to include("Hide hosts")
+    end
+
+    it "renders the page with hosts hidden when the cookie is set" do
+      cookies["hosts_off"] = "1"
+
+      get new_session_path
+
+      expect(response.body).to include('class="app app--hosts-off"')
+      expect(response.body).to match(%r{data-hosts-target="toggle"[^>]*>\s*Show hosts})
+    end
+  end
+
   context "when authenticated" do
     before { sign_in_as(users(:one)) }
 

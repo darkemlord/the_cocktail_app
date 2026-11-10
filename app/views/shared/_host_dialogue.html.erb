@@ -8,5 +8,11 @@
       <%= details[:name] %><span class="dialogue__role"><%= details[:role] %></span><span class="dialogue__name-jp" lang="ja" aria-hidden="true"><%= details[:jp] %></span>
     </p>
     <p class="dialogue__text"><%= line %></p>
+    <div class="dialogue__footer">
+      <button class="dialogue__hide-all" type="button" data-action="hosts#hideAll">Hide hosts</button>
+    </div>
+    <button class="dialogue__close" type="button" aria-label="Close dialogue" data-action="hosts#close">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+    </button>
   </div>
 </aside>

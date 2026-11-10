@@ -34,7 +34,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="app">
+  <body class="app <%= "app--hosts-off" if hosts_hidden? %>" data-controller="hosts" data-hosts-off-class="app--hosts-off">
     <header class="site-header">
       <div class="container site-header__inner">
         <%= link_to root_path, class: "logo" do %>
@@ -92,6 +92,9 @@
         <%= render "shared/skyline" %>
       <% end %>
       <div class="site-footer__bar">
+        <button class="hosts-toggle" type="button" aria-pressed="<%= hosts_hidden? %>" data-hosts-target="toggle" data-action="hosts#toggle">
+          <%= hosts_hidden? ? "Show hosts" : "Hide hosts" %>
+        </button>
         <span lang="ja" aria-hidden="true">シティ・ポップ ★ カクテル ★ 1986</span>
       </div>
     </footer>

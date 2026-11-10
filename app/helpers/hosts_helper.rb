@@ -8,6 +8,11 @@ module HostsHelper
 
   EXPRESSIONS = %i[ neutral smile surprise curious fun ].freeze
 
+  # Set by the hosts Stimulus controller when the visitor hides the hosts
+  def hosts_hidden?
+    cookies[:hosts_off] == "1"
+  end
+
   def host_dialogue(host, expression, line, placement: nil)
     raise ArgumentError, "Unknown host: #{host}" unless HOSTS.key?(host)
     raise ArgumentError, "Unknown expression: #{expression}" unless EXPRESSIONS.include?(expression)
