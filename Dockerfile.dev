@@ -7,7 +7,7 @@ WORKDIR /rails
 
 # Packages needed to build gems and run the app
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libvips libyaml-dev pkg-config sqlite3 curl && \
+    apt-get install --no-install-recommends -y build-essential git libpq-dev libvips libyaml-dev pkg-config postgresql-client curl && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # RAILS_ENV is left unset so Rails defaults to development and RSpec can use test
