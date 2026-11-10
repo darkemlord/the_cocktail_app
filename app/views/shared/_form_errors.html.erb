@@ -1,0 +1,13 @@
+<% if record.errors.any? %>
+  <div class="form-errors" role="alert">
+    <h2 class="form-errors__title">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M12 7v6" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><circle cx="12" cy="16.8" r="1.5" fill="#fff"/></svg>
+      <%= pluralize(record.errors.count, "error") %> prohibited this <%= record.model_name.human.downcase %> from being saved:
+    </h2>
+    <ul>
+      <% record.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
