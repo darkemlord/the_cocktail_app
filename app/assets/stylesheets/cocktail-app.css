@@ -1390,6 +1390,20 @@ a:hover { color: var(--link-hover); }
 .art--photo::before,
 .art--photo::after { display: none; }
 
+.site-footer__city-img {
+  display: block;
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  object-position: 50% 60%;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 45%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 45%);
+}
+@container app (min-width: 720px) {
+  .site-footer__city-img { height: 150px; }
+}
+.site-footer__city-img + .site-footer__city { display: none; }
+
 /* Estado vacío ilustrado: images/extras/empty-state.webp (560×400) */
 .empty-state__img {
   display: block;
