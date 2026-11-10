@@ -1,4 +1,4 @@
-module SessionTestHelper
+module SessionHelper
   def sign_in_as(user)
     Current.session = user.sessions.create!
 
@@ -14,6 +14,6 @@ module SessionTestHelper
   end
 end
 
-ActiveSupport.on_load(:action_dispatch_integration_test) do
-  include SessionTestHelper
+RSpec.configure do |config|
+  config.include SessionHelper, type: :request
 end
