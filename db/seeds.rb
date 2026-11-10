@@ -9,18 +9,21 @@ seeds = {
   "ana@cocktails.test" => [
     {
       name: "Negroni",
+      mood: :after_hours,
       difficulty: :easy,
       ingredients: "30 ml gin\n30 ml Campari\n30 ml vermouth rosso\nOrange peel",
       instructions: "Stir all ingredients with ice in a mixing glass. Strain into a rocks glass over a large ice cube and garnish with the orange peel."
     },
     {
       name: "Mojito",
+      mood: :summer_night,
       difficulty: :medium,
       ingredients: "50 ml white rum\n25 ml lime juice\n2 tsp sugar\n8 mint leaves\nSoda water",
       instructions: "Gently muddle the mint with sugar and lime juice. Add rum and crushed ice, top with soda water and stir."
     },
     {
       name: "Ramos Gin Fizz",
+      mood: :tokyo_rain,
       difficulty: :hard,
       ingredients: "45 ml gin\n15 ml lemon juice\n15 ml lime juice\n30 ml simple syrup\n60 ml cream\n1 egg white\n3 drops orange flower water\nSoda water",
       instructions: "Dry shake everything except soda for a minute, then shake hard with ice. Strain into a highball glass and slowly top with soda until the foam rises."
@@ -29,12 +32,14 @@ seeds = {
   "beto@cocktails.test" => [
     {
       name: "Old Fashioned",
+      mood: :after_hours,
       difficulty: :easy,
       ingredients: "60 ml bourbon\n1 sugar cube\n2 dashes Angostura bitters\nOrange peel",
       instructions: "Muddle the sugar with the bitters and a splash of water. Add bourbon and ice, stir until chilled and garnish with the orange peel."
     },
     {
       name: "Margarita",
+      mood: :golden_sunset,
       difficulty: :medium,
       ingredients: "50 ml tequila\n25 ml triple sec\n25 ml lime juice\nSalt",
       instructions: "Rim a glass with salt. Shake tequila, triple sec and lime juice with ice and strain into the glass."

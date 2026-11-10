@@ -6,6 +6,7 @@ one:
   ingredients: Gin, Campari, vermouth rosso
   instructions: Stir with ice and strain.
   difficulty: easy
+  mood: after_hours
 
 two:
   user: two
@@ -13,3 +14,4 @@ two:
   ingredients: Tequila, triple sec, lime juice
   instructions: Shake with ice and strain.
   difficulty: medium
+  mood: golden_sunset

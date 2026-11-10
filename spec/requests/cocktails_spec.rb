@@ -55,7 +55,7 @@ RSpec.describe "Cocktails", type: :request do
 
     describe "POST /cocktails" do
       let(:valid_params) do
-        { cocktail: { name: "Mojito", ingredients: "Rum, mint, lime", instructions: "Muddle and stir.", difficulty: "medium" } }
+        { cocktail: { name: "Mojito", ingredients: "Rum, mint, lime", instructions: "Muddle and stir.", difficulty: "medium", mood: "summer_night" } }
       end
 
       it "creates a cocktail owned by the current user" do
@@ -66,6 +66,7 @@ RSpec.describe "Cocktails", type: :request do
         cocktail = Cocktail.last
         expect(cocktail.user).to eq(users(:one))
         expect(cocktail).to be_medium
+        expect(cocktail).to be_summer_night
         expect(response).to redirect_to(cocktail_path(cocktail))
       end
 

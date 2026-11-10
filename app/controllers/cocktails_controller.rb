@@ -46,6 +46,6 @@ class CocktailsController < ApplicationController
     end
 
     def cocktail_params
-      params.expect(cocktail: [ :name, :ingredients, :instructions, :difficulty ])
+      params.expect(cocktail: [ :name, :ingredients, :instructions, :difficulty, :mood ])
     end
 end

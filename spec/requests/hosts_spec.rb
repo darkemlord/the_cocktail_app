@@ -57,9 +57,17 @@ RSpec.describe "Hosts", type: :request do
       expect(host_on_page).to eq("reina")
     end
 
-    it "shows Nagisa on any other cocktail" do
+    it "shows Nagisa on an after hours cocktail" do
       get cocktail_path(cocktails(:one))
       expect(host_on_page).to eq("nagisa")
+    end
+
+    it "shows Mika on a tropical cocktail" do
+      cocktails(:one).update!(mood: :summer_night)
+
+      get cocktail_path(cocktails(:one))
+
+      expect(host_on_page).to eq("mika")
     end
 
     it "shows Mika celebrating right after creating a cocktail" do

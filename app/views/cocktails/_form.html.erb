@@ -13,6 +13,11 @@
     </div>
 
     <div class="form-field">
+      <%= form.label :mood %>
+      <%= form.select :mood, mood_options %>
+    </div>
+
+    <div class="form-field">
       <%= form.label :ingredients %>
       <%= form.text_area :ingredients, rows: 6, placeholder: "One ingredient per line" %>
     </div>

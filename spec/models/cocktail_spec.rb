@@ -16,6 +16,18 @@ RSpec.describe Cocktail, type: :model do
     expect(Cocktail.new).to be_easy
   end
 
+  it "defaults mood to after_hours" do
+    expect(Cocktail.new).to be_after_hours
+  end
+
+  it "is invalid with an unknown mood" do
+    cocktail = cocktails(:one)
+    cocktail.mood = "grumpy"
+
+    expect(cocktail).not_to be_valid
+    expect(cocktail.errors).to include(:mood)
+  end
+
   it "is invalid with an unknown difficulty" do
     cocktail = cocktails(:one)
     cocktail.difficulty = "bogus"

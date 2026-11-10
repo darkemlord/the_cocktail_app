@@ -21,4 +21,29 @@ RSpec.describe HostsHelper, type: :helper do
       expect { helper.host_dialogue(:mika, :angry, "Hi") }.to raise_error(ArgumentError, /Unknown expression/)
     end
   end
+
+  describe "#recipe_host_dialogue" do
+    it "has a host for every mood" do
+      Cocktail.moods.each_key do |mood|
+        expect(helper.recipe_host_dialogue(Cocktail.new(mood: mood))).to include("dialogue--end")
+      end
+    end
+
+    it "sends Nagisa to elegant moods" do
+      expect(helper.recipe_host_dialogue(Cocktail.new(mood: :midnight_romance))).to include("host-nagisa")
+    end
+
+    it "sends Mika to tropical moods" do
+      expect(helper.recipe_host_dialogue(Cocktail.new(mood: :summer_night))).to include("host-mika", "summer vacation")
+    end
+
+    it "sends Reina to neon moods" do
+      expect(helper.recipe_host_dialogue(Cocktail.new(mood: :neon_dreams))).to include("host-reina")
+    end
+
+    it "sends Reina to hard recipes whatever the mood" do
+      html = helper.recipe_host_dialogue(Cocktail.new(mood: :summer_night, difficulty: :hard))
+      expect(html).to include("host-reina", "hurricane")
+    end
+  end
 end

@@ -15,6 +15,7 @@
           <h1 class="recipe__title"><%= @cocktail.name %></h1>
           <div class="recipe__meta">
             <span class="badge badge--<%= @cocktail.difficulty %>"><%= @cocktail.difficulty %></span>
+            <span><%= @cocktail.mood.titleize %></span>
             <span>by <%= @cocktail.user.email_address %></span>
           </div>
 
@@ -54,10 +55,8 @@
 
     <% if notice.present? %>
       <%= host_dialogue :mika, :smile, "Cheers! That one's going on the menu.", placement: :end %>
-    <% elsif @cocktail.hard? %>
-      <%= host_dialogue :reina, :fun, "Easy there! You're making a cocktail, not starting a hurricane.", placement: :end %>
     <% else %>
-      <%= host_dialogue :nagisa, :neutral, "Some drinks are meant to be enjoyed slowly. Especially on nights like this.", placement: :end %>
+      <%= recipe_host_dialogue @cocktail %>
     <% end %>
   </div>
 </main>
