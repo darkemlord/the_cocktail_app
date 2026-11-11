@@ -6,6 +6,12 @@ export default class extends Controller {
   static targets = [ "toggle" ]
   static classes = [ "off" ]
 
+  // Turbo swaps in a cached <body> on Back, which may predate the last toggle.
+  // The cookie is the source of truth, so re-apply it whenever the body connects.
+  connect() {
+    this.#render(document.cookie.split("; ").includes("hosts_off=1"))
+  }
+
   close(event) {
     event.currentTarget.closest(".dialogue").classList.add("dialogue--hidden")
   }
@@ -27,9 +33,13 @@ export default class extends Controller {
   }
 
   #setHidden(hidden) {
-    this.element.classList.toggle(this.offClass, hidden)
     if (!hidden) this.reopenDialogues()
     document.cookie = `hosts_off=${hidden ? "1" : ""}; path=/; max-age=${hidden ? 31536000 : 0}; samesite=lax`
+    this.#render(hidden)
+  }
+
+  #render(hidden) {
+    this.element.classList.toggle(this.offClass, hidden)
 
     if (this.hasToggleTarget) {
       this.toggleTarget.textContent = hidden ? "Show hosts" : "Hide hosts"
