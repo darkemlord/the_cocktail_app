@@ -31,6 +31,13 @@ RSpec.describe "Hosts", type: :request do
       expect(response.body).to include('class="app app--hosts-off"')
       expect(response.body).to match(%r{data-hosts-target="toggle"[^>]*>\s*Show hosts})
     end
+
+    # The label already names the action, so aria-pressed would contradict it
+    # ("Show hosts, pressed") for screen readers.
+    it "labels the toggle with its action and no pressed state" do
+      get new_session_path
+      expect(response.body).not_to include("aria-pressed")
+    end
   end
 
   context "when authenticated" do

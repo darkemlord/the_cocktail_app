@@ -43,7 +43,6 @@ export default class extends Controller {
 
     if (this.hasToggleTarget) {
       this.toggleTarget.textContent = hidden ? "Show hosts" : "Hide hosts"
-      this.toggleTarget.setAttribute("aria-pressed", hidden)
     }
   }
 }
