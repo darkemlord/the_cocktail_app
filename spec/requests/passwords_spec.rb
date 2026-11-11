@@ -52,14 +52,29 @@ RSpec.describe "Passwords", type: :request do
   end
 
   it "does not update with non matching passwords" do
-    token = user.password_reset_token
+    expect {
+      put password_path(user.password_reset_token), params: { password: "new-password", password_confirmation: "other-password" }
+    }.not_to change { user.reload.password_digest }
+
+    expect(response).to have_http_status(:unprocessable_content)
+    expect(response.body).to include("match Password")
+  end
+
+  it "shows the real error when the password is too short" do
+    put password_path(user.password_reset_token), params: { password: "short", password_confirmation: "short" }
+
+    expect(response).to have_http_status(:unprocessable_content)
+    expect(response.body).to include("too short")
+  end
+
+  it "does not reset or log out everywhere without a password" do
+    user.sessions.create!
 
     expect {
-      put password_path(token), params: { password: "no", password_confirmation: "match" }
+      put password_path(user.password_reset_token)
     }.not_to change { user.reload.password_digest }
-    expect(response).to redirect_to(edit_password_path(token))
 
-    follow_redirect!
-    expect(response.body).to include("Passwords did not match")
+    expect(response).to have_http_status(:bad_request)
+    expect(user.sessions.count).to eq(1)
   end
 end
