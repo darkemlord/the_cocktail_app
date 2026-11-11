@@ -34,7 +34,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="app <%= "app--hosts-off" if hosts_hidden? %>" data-controller="hosts" data-hosts-off-class="app--hosts-off">
+  <body class="app <%= "app--hosts-off" if hosts_hidden? %>" data-controller="hosts" data-hosts-off-class="app--hosts-off" data-action="turbo:before-cache@document->hosts#reopenDialogues">
     <header class="site-header">
       <div class="container site-header__inner">
         <%= link_to root_path, class: "logo" do %>
