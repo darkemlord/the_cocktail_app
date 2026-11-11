@@ -1127,8 +1127,8 @@ a:hover { color: var(--link-hover); }
   --host-mika-bg: #12465c;
 
   --portrait-ratio: 3 / 4;
-  --portrait-w-sm: 72px;   /* mobile: 72 × 96 */
-  --portrait-w-lg: 168px;  /* desktop: 168 × 224 */
+  --portrait-w-sm: 88px;   /* mobile: 88 × 117 */
+  --portrait-w-lg: 208px;  /* desktop: 208 × 277 */
   --dialogue-max: 760px;
 }
 
@@ -1167,7 +1167,17 @@ a:hover { color: var(--link-hover); }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.82) saturate(1.1);
+  filter: brightness(0.6) saturate(1.15) blur(1.5px);
+  transform: scale(1.06);
+}
+
+.dialogue { --portrait-zoom: 1.7; }
+.dialogue .portrait__img {
+  transform: scale(var(--portrait-zoom));
+  transform-origin: 50% 4%;
+}
+@container app (min-width: 720px) {
+  .dialogue { --portrait-zoom: 1.28; }
 }
 /* Burbuja de expresión (placeholder): … neutral · ♪ smile · ! surprise · ? curious · ★ fun */
 .portrait__emote {
