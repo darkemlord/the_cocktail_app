@@ -1390,6 +1390,11 @@ a:hover { color: var(--link-hover); }
 .art--photo::before,
 .art--photo::after { display: none; }
 
+img.art__glass {
+  object-fit: contain;
+  filter: drop-shadow(4px 4px 0 rgb(31 22 64 / 0.75));
+}
+
 .site-footer__city-img {
   display: block;
   width: 100%;
