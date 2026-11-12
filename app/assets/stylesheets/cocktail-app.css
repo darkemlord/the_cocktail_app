@@ -927,6 +927,40 @@ a:hover { color: var(--link-hover); }
   background-repeat: no-repeat;
 }
 
+/* Desplegable estilizable (Chrome/Edge). Safari y Firefox muestran el menú nativo. */
+@supports (appearance: base-select) {
+  .form-field select,
+  .form-field select::picker(select) {
+    appearance: base-select;
+  }
+  .form-field select::picker-icon { display: none; }
+
+  .form-field select::picker(select) {
+    margin-block: 6px;
+    padding: 6px;
+    color: var(--c-ink-900);
+    background: var(--c-cream-50);
+    border: 2px solid var(--c-ink-900);
+    border-radius: var(--radius-md);
+    box-shadow: 4px 4px 0 var(--c-pink-400);
+  }
+  .form-field select option {
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+  .form-field select option::checkmark { display: none; }
+  .form-field select option:hover,
+  .form-field select option:focus-visible {
+    background: var(--c-pink-100);
+    outline: none;
+  }
+  .form-field select option:checked {
+    font-weight: 700;
+    background: var(--c-pink-300);
+  }
+}
+
 .form-field ::placeholder { color: var(--c-ink-400); opacity: 1; }
 
 .form-field input:focus,
