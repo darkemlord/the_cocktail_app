@@ -2,7 +2,8 @@ class CocktailsController < ApplicationController
   before_action :set_own_cocktail, only: %i[ edit update destroy ]
 
   def index
-    @cocktails = Cocktail.includes(:user).order(:name)
+    @mood = params[:mood].presence_in(Cocktail.moods.keys)
+    @cocktails = Cocktail.by_mood(@mood).includes(:user).order(:name)
   end
 
   def show

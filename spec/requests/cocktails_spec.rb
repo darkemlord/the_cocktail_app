@@ -30,6 +30,32 @@ RSpec.describe "Cocktails", type: :request do
         get root_path
         expect(response).to have_http_status(:success)
       end
+
+      context "when filtering by mood" do
+        def active_chip
+          response.body[%r{<a [^>]*aria-current="page"[^>]*>\s*([^<]+?)\s*</a>}, 1]
+        end
+
+        it "lists only the cocktails with that mood" do
+          get cocktails_path(mood: "golden_sunset")
+
+          expect(response.body).to include("Margarita")
+          expect(response.body).not_to include("Negroni")
+          expect(active_chip).to eq("Golden Sunset")
+        end
+
+        it "lists every cocktail for an unknown mood" do
+          get cocktails_path(mood: "grumpy")
+
+          expect(response.body).to include("Negroni", "Margarita")
+          expect(active_chip).to eq("All")
+        end
+
+        it "marks All as active without a filter" do
+          get cocktails_path
+          expect(active_chip).to eq("All")
+        end
+      end
     end
 
     describe "GET /cocktails/:id" do

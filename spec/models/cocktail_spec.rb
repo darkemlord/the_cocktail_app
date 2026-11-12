@@ -35,4 +35,18 @@ RSpec.describe Cocktail, type: :model do
     expect(cocktail).not_to be_valid
     expect(cocktail.errors).to include(:difficulty)
   end
+
+  describe ".by_mood" do
+    it "keeps only the cocktails with that mood" do
+      expect(Cocktail.by_mood("golden_sunset")).to contain_exactly(cocktails(:two))
+    end
+
+    it "returns every cocktail for an unknown mood" do
+      expect(Cocktail.by_mood("grumpy")).to contain_exactly(cocktails(:one), cocktails(:two))
+    end
+
+    it "returns every cocktail without a mood" do
+      expect(Cocktail.by_mood(nil)).to contain_exactly(cocktails(:one), cocktails(:two))
+    end
+  end
 end

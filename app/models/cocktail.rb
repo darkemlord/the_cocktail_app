@@ -9,4 +9,7 @@ class Cocktail < ApplicationRecord
   }, validate: true
 
   validates :name, :ingredients, :instructions, presence: true
+
+  # Unknown or missing moods mean "no filter", so a bad ?mood= shows everything
+  scope :by_mood, ->(mood) { moods.key?(mood) ? where(mood:) : all }
 end
