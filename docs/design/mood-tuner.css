@@ -1,0 +1,154 @@
+/* 20. FILTRO POR MOOD — dial de radio FM ===================================
+   Una sola fila de "estaciones" de texto sobre una escala; la activa lleva
+   una aguja de neón. En pantallas angostas la fila se desliza de lado en vez
+   de apilarse. Reemplaza a .mood-filter / .mood-chip.
+   ========================================================================== */
+
+.mood-tuner { margin: 0 0 var(--space-6); }
+.mood-tuner__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px var(--space-4);
+  margin-bottom: var(--space-2);
+}
+.mood-tuner__label {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  letter-spacing: 0.06em;
+  color: var(--c-cream-50);
+}
+.mood-tuner__jp {
+  margin-right: 10px;
+  font-family: var(--font-jp);
+  font-weight: 700;
+  font-size: 0.6875rem;
+  letter-spacing: 0.3em;
+  vertical-align: 0.15em;
+  color: var(--c-cyan-300);
+}
+.mood-tuner__now {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+.mood-tuner__now strong { color: var(--c-pink-100); }
+
+.mood-tuner__dial {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.05), transparent 45%),
+    var(--c-night-950);
+  border: 2px solid rgb(195 178 255 / 0.35);
+  border-radius: var(--radius-md);
+  box-shadow:
+    inset 0 0 0 3px var(--c-night-950),
+    inset 0 0 0 4px rgb(195 178 255 / 0.12),
+    4px 4px 0 var(--c-violet-500);
+}
+/* Escala del dial: rayitas cortas cada 10px y largas cada 50px */
+.mood-tuner__dial::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6px;
+  height: 12px;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(90deg, rgb(195 178 255 / 0.55) 0 2px, transparent 2px 50px) bottom / 100% 12px no-repeat,
+    repeating-linear-gradient(90deg, rgb(195 178 255 / 0.28) 0 1px, transparent 1px 10px) bottom / 100% 6px no-repeat;
+}
+.mood-tuner__stations {
+  list-style: none;
+  margin: 0;
+  padding: 0 12px;
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: 24px;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 20px), transparent 100%);
+}
+.mood-tuner__stations::-webkit-scrollbar { display: none; }
+@container app (min-width: 980px) {
+  .mood-tuner__stations {
+    justify-content: space-between;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+.mood-tuner__station {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 8px 10px 20px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  color: var(--c-lavender-300);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  scroll-snap-align: center;
+}
+.mood-tuner__station:hover { color: var(--c-cream-50); }
+.mood-tuner__station:focus-visible { outline-offset: -4px; }
+.mood-tuner__station[aria-current="page"] {
+  color: var(--c-pink-100);
+  text-shadow: var(--glow-pink);
+}
+/* La aguja */
+.mood-tuner__station[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  width: 3px;
+  height: 24px;
+  transform: translateX(-50%);
+  border-radius: 2px;
+  background: var(--c-pink-400);
+  box-shadow: 0 0 6px var(--c-pink-400), 0 0 16px rgb(255 95 162 / 0.6);
+}
+
+/* Estación sin cocktails (no es el estado vacío general) */
+.mood-empty {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-5);
+  border: 3px dashed rgb(195 178 255 / 0.5);
+  border-radius: var(--radius-xl);
+  background: rgb(15 10 40 / 0.45);
+}
+.mood-empty__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: 1.2;
+  color: var(--c-cream-50);
+  text-shadow: var(--glow-cyan);
+}
+.mood-empty__text { max-width: 48ch; color: var(--color-text-muted); }
+.mood-empty__text strong { color: var(--c-pink-100); }
+.mood-empty__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-4);
+  margin-top: 4px;
+}
+
+/* Mood en la card */
+.cocktail-card__mood {
+  width: 100%;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--c-violet-500);
+}
+.cocktail-card__mood::before { content: "♪ "; }

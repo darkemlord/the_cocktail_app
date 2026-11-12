@@ -55,6 +55,27 @@ RSpec.describe "Cocktails", type: :request do
           get cocktails_path
           expect(active_chip).to eq("All")
         end
+
+        it "shows the mood on each card" do
+          get cocktails_path
+          expect(response.body).to include('cocktail-card__mood">Golden Sunset')
+        end
+
+        it "shows a station-empty message, not the general one, for a mood with no cocktails" do
+          get cocktails_path(mood: "heartbreak")
+
+          expect(response.body).to include("Nothing on this station yet.", "Heartbreak? Nobody", "hosts/reina/surprise")
+          expect(response.body).not_to include("No cocktails yet.")
+        end
+
+        it "hides the tuner when there are no cocktails at all" do
+          Cocktail.delete_all
+
+          get cocktails_path
+
+          expect(response.body).to include("No cocktails yet.")
+          expect(response.body).not_to include("mood-tuner")
+        end
       end
     end
 

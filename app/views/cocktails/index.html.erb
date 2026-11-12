@@ -11,20 +11,32 @@
       <% end %>
     </div>
 
-    <%# Only the chips swap this frame; every other link inside breaks out to the full page %>
-    <%= turbo_frame_tag "cocktails", target: "_top" do %>
+    <%# Only the stations swap this frame; every other link inside breaks out to the full page %>
+    <%= turbo_frame_tag "cocktails", target: "_top", data: { controller: "mood-filter", action: "turbo:before-frame-render->mood-filter#releaseFocus turbo:frame-render->mood-filter#restoreFocus" } do %>
       <% if @cocktails.any? %>
         <%= host_dialogue :reina, :curious, "What are we mixing tonight?" %>
+      <% elsif @mood %>
+        <%= host_dialogue :reina, :surprise, "#{@mood.titleize}? Nobody's poured that one yet." %>
       <% else %>
         <%= host_dialogue :mika, :fun, "No cocktails yet? Let's fix that, I'm thirsty!" %>
       <% end %>
 
-      <nav class="mood-filter" aria-label="Filter by mood">
-        <%= link_to "All", cocktails_path, class: "mood-chip", aria: { current: ("page" unless @mood) }, data: { turbo_frame: "cocktails", turbo_action: "advance" } %>
-        <% mood_options.each do |label, mood| %>
-          <%= link_to label, cocktails_path(mood:), class: "mood-chip", aria: { current: ("page" if mood == @mood) }, data: { turbo_frame: "cocktails", turbo_action: "advance" } %>
-        <% end %>
-      </nav>
+      <% if Cocktail.exists? %>
+        <nav class="mood-tuner" aria-label="Filter by mood">
+          <div class="mood-tuner__head">
+            <p class="mood-tuner__label"><span class="mood-tuner__jp" lang="ja" aria-hidden="true">ムード・チューナー</span>Mood</p>
+            <p class="mood-tuner__now">Now playing: <strong><%= @mood ? @mood.titleize : "All moods" %></strong></p>
+          </div>
+          <div class="mood-tuner__dial">
+            <ul class="mood-tuner__stations" role="list" data-mood-filter-target="stations">
+              <li><%= link_to "All", cocktails_path, class: "mood-tuner__station", aria: { current: ("page" unless @mood) }, data: { turbo_frame: "cocktails", turbo_action: "advance" } %></li>
+              <% mood_options.each do |label, mood| %>
+                <li><%= link_to label, cocktails_path(mood:), class: "mood-tuner__station", aria: { current: ("page" if mood == @mood) }, data: { turbo_frame: "cocktails", turbo_action: "advance" } %></li>
+              <% end %>
+            </ul>
+          </div>
+        </nav>
+      <% end %>
 
       <% if @cocktails.any? %>
         <ul class="cocktail-grid" role="list">
@@ -39,12 +51,22 @@
                   <div class="cocktail-card__meta">
                     <span class="badge badge--<%= cocktail.difficulty %>"><%= cocktail.difficulty %></span>
                     <span class="cocktail-card__author">by <%= cocktail.user.email_address %></span>
+                    <span class="cocktail-card__mood"><%= cocktail.mood.titleize %></span>
                   </div>
                 </div>
               </article>
             </li>
           <% end %>
         </ul>
+      <% elsif @mood %>
+        <div class="mood-empty">
+          <p class="mood-empty__title">Nothing on this station yet.</p>
+          <p class="mood-empty__text">No cocktails match <strong><%= @mood.titleize %></strong>. Tune into another mood or add the first one.</p>
+          <div class="mood-empty__actions">
+            <%= link_to "Show all moods", cocktails_path, class: "btn btn--secondary btn--sm", data: { turbo_frame: "cocktails", turbo_action: "advance" } %>
+            <%= link_to "New cocktail", new_cocktail_path, class: "btn btn--primary btn--sm" %>
+          </div>
+        </div>
       <% else %>
         <div class="empty-state">
           <%= image_tag "extras/empty-state.webp", class: "empty-state__img", alt: "" %>
