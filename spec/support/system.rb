@@ -12,6 +12,9 @@ end
 # System specs run a real browser against a test server.
 # In Docker the browser is the `chrome` service, so the server has to listen on
 # every interface and Chrome reaches it at this container's IP.
+# Icon-only buttons (like the dialogue ×) are named by aria-label, so find them by it
+Capybara.enable_aria_label = true
+
 RSpec.configure do |config|
   config.include SystemSessionHelper, type: :system
 
