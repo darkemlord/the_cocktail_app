@@ -11,6 +11,8 @@ services:
       DB_HOST: db
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
+      # System specs drive this remote browser; without it they use a local Chrome (CI)
+      SELENIUM_URL: http://chrome:4444/wd/hub
     depends_on:
       db:
         condition: service_healthy
@@ -32,6 +34,13 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+
+  # Headless browser for system specs. Watch it live at http://localhost:7900 (password: secret)
+  chrome:
+    image: selenium/standalone-chromium:156.0-20261101
+    shm_size: 2gb
+    ports:
+      - "7900:7900"
 
 volumes:
   postgres_data:
